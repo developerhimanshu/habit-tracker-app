@@ -1,14 +1,23 @@
 import { AddHabitButton, AddHabitModal, HabitList, Header } from "@/components";
 import { SafeAreaView } from "@/components/SafeAreaView";
 import { useHabits } from "@/hooks/useHabits";
-import { useState } from "react";
-import { StyleSheet, useColorScheme, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
 
 export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
-  const { habits, addHabit, deleteHabit } = useHabits();
+  const { habits, addHabit, deleteHabit, deleteHabitDirect, refreshHabits } =
+    useHabits();
   const [modalVisible, setModalVisible] = useState(false);
+
+  // Refresh habits when the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      refreshHabits();
+    }, [refreshHabits])
+  );
 
   const handleAddHabit = (name: string) => {
     addHabit(name);
@@ -19,7 +28,15 @@ export default function HomeScreen() {
     <SafeAreaView>
       <View className="flex-1">
         <Header />
-        <HabitList habits={habits} onDeleteHabit={deleteHabit} />
+        <Text className={`text-3xl font-bold mb-2 text-white`}>
+          Your today's tasks
+        </Text>
+
+        <HabitList
+          habits={habits}
+          onDeleteHabit={deleteHabit}
+          onDeleteHabitDirect={deleteHabitDirect}
+        />
         <AddHabitButton onPress={() => setModalVisible(true)} />
         <AddHabitModal
           visible={modalVisible}

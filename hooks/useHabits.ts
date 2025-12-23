@@ -35,13 +35,33 @@ export const useHabits = () => {
         return;
       }
 
+      const trimmedName = name.trim();
+      
+      // Check if habit with the same name already exists
+      const existingHabit = habits.find(
+        (habit) => habit.name.toLowerCase() === trimmedName.toLowerCase()
+      );
+      
+      if (existingHabit) {
+        // Habit already exists, don't add duplicate
+        return;
+      }
+
       const newHabit: Habit = {
         id: Date.now().toString(),
-        name: name.trim(),
+        name: trimmedName,
         createdAt: new Date().toISOString(),
       };
 
       const updatedHabits = [...habits, newHabit];
+      saveHabits(updatedHabits);
+    },
+    [habits, saveHabits]
+  );
+
+  const deleteHabitDirect = useCallback(
+    (id: string) => {
+      const updatedHabits = habits.filter((habit) => habit.id !== id);
       saveHabits(updatedHabits);
     },
     [habits, saveHabits]
@@ -58,14 +78,13 @@ export const useHabits = () => {
             text: "Delete",
             style: "destructive",
             onPress: () => {
-              const updatedHabits = habits.filter((habit) => habit.id !== id);
-              saveHabits(updatedHabits);
+              deleteHabitDirect(id);
             },
           },
         ]
       );
     },
-    [habits, saveHabits]
+    [deleteHabitDirect]
   );
 
   useEffect(() => {
@@ -77,6 +96,7 @@ export const useHabits = () => {
     loading,
     addHabit,
     deleteHabit,
+    deleteHabitDirect,
     refreshHabits: loadHabits,
   };
 };
