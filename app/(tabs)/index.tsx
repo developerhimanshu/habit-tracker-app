@@ -43,38 +43,6 @@ export default function HomeScreen() {
           onClose={() => setModalVisible(false)}
           onAdd={handleAddHabit}
         />
-        {/* Remove the test View if not needed, or fix it like below */}
-        {/* 
-        <View
-          style={{
-            backgroundColor: isDark 
-              ? "rgba(31, 41, 55, 0.4)"
-              : "rgba(229, 231, 235, 0.6)",
-            borderRadius: 24,
-            padding: 48,
-            alignItems: "center",
-            borderWidth: 1,
-            borderColor: isDark
-              ? "rgba(255, 255, 255, 0.1)"
-              : "rgba(0, 0, 0, 0.1)",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.4,
-            shadowRadius: 16,
-            elevation: 12,
-            overflow: "hidden",
-          }}
-        >
-          <Text 
-            style={{ 
-              backgroundColor: "transparent",
-              color: isDark ? "#FFFFFF" : "#111827" 
-            }}
-          >
-            Hello
-          </Text>
-        </View>
-        */}
       </View>
     </SafeAreaView>
   );

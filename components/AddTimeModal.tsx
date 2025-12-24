@@ -20,9 +20,16 @@ export const AddTimeModal = ({
   onAdd: (time: number) => void;
 }) => {
   const [time, setTime] = useState<number | undefined>(undefined);
+  const [timeInput, setTimeInput] = useState<string>("");
   const { translateY, panHandlers } = useModalSwipeDown({ onClose });
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
+
+  const isValidInput = (input: string): boolean => {
+    if (input.trim() === "") return false;
+    // Check if input contains only digits (0-9)
+    return /^\d+$/.test(input.trim()) && parseInt(input.trim()) > 0;
+  };
 
   return (
     <Modal
@@ -59,18 +66,22 @@ export const AddTimeModal = ({
                 ? "bg-gray-800 text-white border border-gray-700"
                 : "bg-gray-100 text-gray-900"
             }`}
-            placeholder="e.g., 10 minutes"
+            placeholder="e.g. 10, 15, 20, etc."
             placeholderTextColor={isDark ? "#9CA3AF" : "#9CA3AF"}
-            value={time?.toString() || ""}
-            onChangeText={(text) => setTime(parseInt(text) || undefined)}
+            value={timeInput}
+            onChangeText={(text) => setTimeInput(text)}
           />
-
+          {timeInput !== "" && !isValidInput(timeInput) && (
+            <Text className="text-red-500 text-sm mb-6 -mt-6">
+              *Please enter a valid time in numbers
+            </Text>
+          )}
           <TouchableOpacity
-            disabled={!time}
+            disabled={!isValidInput(timeInput)}
             onPress={() => {
-              if (time) {
-                onAdd(time * 60);
-                setTime(undefined);
+              if (isValidInput(timeInput)) {
+                onAdd(parseInt(timeInput) * 60);
+                setTimeInput("");
                 onClose();
               }
             }}

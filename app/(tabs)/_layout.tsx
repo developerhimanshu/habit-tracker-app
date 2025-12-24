@@ -22,34 +22,25 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <IconSymbol size={28} name="home" color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="timer"
         options={{
-          title: "Timer",
+          title: "Pomodoro",
           tabBarIcon: ({ color }) => (
             <EntypoSymbol size={28} name="stopwatch" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="progress"
         options={{
-          title: "Profile",
+          title: "Progress",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="person" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <IconSymbol size={28} name="bar-chart" color={color} />
           ),
         }}
       />

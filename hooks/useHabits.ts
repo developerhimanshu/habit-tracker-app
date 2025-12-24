@@ -11,6 +11,7 @@ export const useHabits = () => {
     try {
       setLoading(true);
       const loadedHabits = await storage.getHabits();
+      console.log("loadedHabits", loadedHabits);
       setHabits(loadedHabits);
     } catch (error) {
       console.error("Error loading habits:", error);
@@ -36,12 +37,12 @@ export const useHabits = () => {
       }
 
       const trimmedName = name.trim();
-      
+
       // Check if habit with the same name already exists
       const existingHabit = habits.find(
         (habit) => habit.name.toLowerCase() === trimmedName.toLowerCase()
       );
-      
+
       if (existingHabit) {
         // Habit already exists, don't add duplicate
         return;
